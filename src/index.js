@@ -1,6 +1,55 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import './index.css';
+import logo from './asset/logo.svg';
+import music from './asset/Missyou.mp3'
+import music_on from './asset/music-on.svg';
+import music_off from './asset/music-off.svg';
+
+class Heading extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            iMusicOn: false,
+        };
+    }
+
+    audio = React.createRef();
+
+    clickMusicIcon() {
+        if (this.state.iMusicOn) {
+            this.setState({
+                iMusicOn: false,
+            }, () => {
+                this.audio.current.pause();
+            });
+        } else {
+            this.setState({
+                iMusicOn: true,
+            }, () => {
+                this.audio.current.play();
+            });
+        }
+    }
+
+    render(){
+        return (
+            <div className="heading-content">
+                <div className="heading-left">
+                    <img src={logo} width="30px" height="30px"/>
+                    <div className="music-play" onClick={() => this.clickMusicIcon()}>
+                        <img width="30px" height="30px" src={this.state.iMusicOn ? music_on : music_off}/>
+                        <audio ref={this.audio} src={music}/>
+                    </div>
+                </div>
+                <h1 className="heading-title">{this.props.title}</h1>
+                <div className="heading-right">Hi, {this.props.player ? this.props.player : 'Stranger'}</div>
+            </div>
+        );
+    }
+    
+}
+    
 
 function Square(props) {
     return (
@@ -127,7 +176,12 @@ class Game extends React.Component {
 // ========================================
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<Game />);
+root.render(
+    <div className="body">
+        <Heading title="Tic-Tac-Toe Game"/>
+        <Game />
+    </div>
+);
 function calculateWinner(squares) {
     const lines = [
       [0, 1, 2],
@@ -140,10 +194,10 @@ function calculateWinner(squares) {
       [2, 4, 6],
     ];
     for (let i = 0; i < lines.length; i++) {
-      const [a, b, c] = lines[i];
-      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-        return squares[a];
-      }
+        const [a, b, c] = lines[i];
+        if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+            return squares[a];
+        }
     }
     return null;
-  }
+}

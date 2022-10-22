@@ -7,7 +7,9 @@ This project was initialized by `npx create-react-app react-demo-app`
 It was completed following the [Tutorial](https://reactjs.org/tutorial/tutorial.html#before-we-start-the-tutorial)
 
 ## Improvement
-There is a tiny improvement: When clicking the history step, the board will be refereshed.
+- When clicking the history step, the board will be refereshed.
+
+- Add a heading with the logo, title, greeting and a music player.
 
 ## Run
 In the project directory, you can run: `npm start`
