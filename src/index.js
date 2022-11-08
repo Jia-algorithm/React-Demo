@@ -1,55 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import logo from './asset/logo.svg';
-import music from './asset/Missyou.mp3'
-import music_on from './asset/music-on.svg';
-import music_off from './asset/music-off.svg';
-
-class Heading extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            iMusicOn: false,
-        };
-    }
-
-    audio = React.createRef();
-
-    clickMusicIcon() {
-        if (this.state.iMusicOn) {
-            this.setState({
-                iMusicOn: false,
-            }, () => {
-                this.audio.current.pause();
-            });
-        } else {
-            this.setState({
-                iMusicOn: true,
-            }, () => {
-                this.audio.current.play();
-            });
-        }
-    }
-
-    render(){
-        return (
-            <div className="heading-content">
-                <div className="heading-left">
-                    <img src={logo} width="30px" height="30px"/>
-                    <div className="music-play" onClick={() => this.clickMusicIcon()}>
-                        <img width="30px" height="30px" src={this.state.iMusicOn ? music_on : music_off}/>
-                        <audio ref={this.audio} src={music}/>
-                    </div>
-                </div>
-                <h1 className="heading-title">{this.props.title}</h1>
-                <div className="heading-right">Hi, {this.props.player ? this.props.player : 'Stranger'}</div>
-            </div>
-        );
-    }
-    
-}
-    
+import Heading from './components/Heading'
+import History from './components/History'
 
 function Square(props) {
     return (
@@ -138,16 +91,16 @@ class Game extends React.Component {
         const currentSquares = this.state.currentSquares;
         const winner = calculateWinner(current.squares);
         
-        const moves = history.map((step, move) => {
-            const desc = move ?
-              'Go to move #' + move :
-              'Go to game start';
-            return (
-              <li key={move}>
-                <button onClick={() => this.jumpTo(move)}>{desc}</button>
-              </li>
-            );
-        });
+        // const moves = history.map((step, move) => {
+        //     const desc = move ?
+        //       'Go to move #' + move :
+        //       'Go to game start';
+        //     return (
+        //       <li key={move}>
+        //         <button onClick={() => this.jumpTo(move)}>{desc}</button>
+        //       </li>
+        //     );
+        // });
         
         let status;
         if (winner) {
@@ -159,14 +112,17 @@ class Game extends React.Component {
         return (
             <div className="game">
                 <div className="game-board">
-                <Board 
-                    squares={currentSquares}
-                    onClick={(i) => this.handleClick(i)}
-                />
+                    <Board 
+                        squares={currentSquares}
+                        onClick={(i) => this.handleClick(i)}
+                    />
+                    <div>{status}</div>
                 </div>
                 <div className="game-info">
-                <div>{status}</div>
-                <ol>{moves}</ol>
+                    <History 
+                        history={history}
+                        onClick={(move) => this.jumpTo(move)}
+                    />
                 </div>
             </div>
         );
@@ -182,6 +138,8 @@ root.render(
         <Game />
     </div>
 );
+
+// For functions
 function calculateWinner(squares) {
     const lines = [
       [0, 1, 2],

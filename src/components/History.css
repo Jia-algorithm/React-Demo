@@ -1,0 +1,22 @@
+.historyContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+.historyTitle {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.historyStep {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: white;
+    border-radius: 10px;
+    border-width: 0px;
+    margin: 10px;
+}
